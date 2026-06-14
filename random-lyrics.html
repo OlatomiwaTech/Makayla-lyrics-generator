@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Lyrics Generator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <style>
+  body {
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 95vh;
+  }.container {
+    background: white;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 8px 8px 20px rgba(0,0,0,0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 900px;
+    min-height:145px;
+    flex-direction: column;
+
+  }
+  .container #lyrics-generator {
+    border: none;
+    padding: 10px;
+    width: 80%;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+    </style>
+    <div class="container">
+    <h1 id="lyrics-displayer"></h1>
+    <button id="lyrics-generator">Generator Lyrics</button>
+    </div>
+    <script>
+        const lyrics = [
+            { text: "Nothing can stop me now", mood: "energetic" },
+            { text: "Keep Moving, Don't Stop", mood: "determined" },
+            { text: "I will be taking and breaking it all apart.", mood: "proud" },
+            { text: "Empower Our Dreams is how you give to gain", mood: "chill" },
+            { text: "Why Don't you trust me?", mood: "energetic" }
+            { text: "EveryShow on the planet gonna wanna Invite Me", mood: "energetic" }
+        ]
+        function randomlyrics() {
+            const randomIndex = Math.floor(Math.random() * lyrics.length )
+            return lyrics[randomIndex];
+        }
+        
+function getColorMood(mood) {
+    
+        if(mood === "energetic") {
+            return document.body.style.background = '#ff9999';
+        }
+        else if(mood === "determined") {
+            return document.body.style.background = '#9999ff';
+        }
+        else if(mood === "proud") {
+            return document.body.style.background = '#99ff99';
+        }
+        else if(mood === "chill") {
+            return document.body.style.background = '#a3e4d7';
+        }
+}
+        function updateLyrics() {
+       const lyricObj = randomlyrics();
+
+        document.getElementById("lyrics-displayer").innerText = `“${lyricObj.text}”`;
+        
+        button.style.backgroundColor = getColorMood(lyricObj.mood);
+        }
+        const button = document.getElementById("lyrics-generator");
+
+         updateLyrics();
+
+        button.addEventListener('click', updateLyrics) 
+    </script>
+</body>
+</html>

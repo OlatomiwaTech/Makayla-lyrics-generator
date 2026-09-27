@@ -71,7 +71,8 @@
     }
 
     button,
-    select {
+    select,
+    input {
       font: inherit;
     }
 
@@ -166,6 +167,22 @@
     .favorites h2 {
       font-size: 1rem;
       margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .controls h2 button {
+      font-size: 0.7rem;
+      color: var(--primary);
+      background: none;
+      padding: 4px 8px;
+      border-radius: 8px;
+      transition: background 0.2s ease;
+    }
+
+    .controls h2 button:hover {
+      background: rgba(109, 93, 252, 0.1);
     }
 
     .field {
@@ -180,7 +197,8 @@
       margin-bottom: 8px;
     }
 
-    .field select {
+    .field select,
+    .field input {
       width: 100%;
       padding: 12px 14px;
       border-radius: 14px;
@@ -191,8 +209,41 @@
       transition: border 0.2s ease;
     }
 
-    .field select:focus {
+    .field select:focus,
+    .field input:focus {
       border-color: var(--primary);
+    }
+
+    .presets {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .preset-button {
+      padding: 10px 8px;
+      border-radius: 12px;
+      background: rgba(127, 127, 127, 0.08);
+      color: var(--text);
+      border: 1px solid var(--border);
+      font-size: 0.75rem;
+      font-weight: 600;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+    }
+
+    .preset-button:hover {
+      background: rgba(109, 93, 252, 0.1);
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+
+    .preset-button:active {
+      transform: translateY(0);
     }
 
     .generate-button {
@@ -215,6 +266,11 @@
 
     .generate-button:active {
       transform: translateY(0);
+    }
+
+    .generate-button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
     }
 
     .shortcut {
@@ -252,6 +308,7 @@
       top: -90px;
       right: -70px;
       pointer-events: none;
+      transition: background 0.4s ease;
     }
 
     .song-header {
@@ -334,6 +391,9 @@
       border: 1px solid var(--border);
       font-weight: 600;
       transition: transform 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
     }
 
     .action-button:hover {
@@ -372,6 +432,23 @@
       padding: 22px;
     }
 
+    .search-box {
+      width: 100%;
+      padding: 10px 14px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: rgba(127, 127, 127, 0.05);
+      color: var(--text);
+      outline: none;
+      margin-bottom: 12px;
+      font-size: 0.85rem;
+      transition: border 0.2s ease;
+    }
+
+    .search-box:focus {
+      border-color: var(--primary);
+    }
+
     .history-list,
     .favorites-list {
       display: grid;
@@ -386,6 +463,16 @@
       border-radius: 14px;
       border: 1px solid var(--border);
       background: rgba(127, 127, 127, 0.04);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-align: left;
+    }
+
+    .history-item:hover,
+    .favorite-item:hover {
+      background: rgba(109, 93, 252, 0.08);
+      border-color: var(--primary);
+      transform: translateX(4px);
     }
 
     .history-item strong,
@@ -404,10 +491,43 @@
       text-overflow: ellipsis;
     }
 
+    .item-actions {
+      display: flex;
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    .item-button {
+      padding: 4px 8px;
+      border-radius: 6px;
+      background: rgba(127, 127, 127, 0.1);
+      color: var(--text);
+      font-size: 0.7rem;
+      transition: background 0.2s ease;
+    }
+
+    .item-button:hover {
+      background: rgba(109, 93, 252, 0.15);
+    }
+
+    .item-button.delete:hover {
+      background: rgba(239, 68, 68, 0.15);
+      color: var(--danger);
+    }
+
     .empty-state {
       color: var(--muted);
       font-size: 0.8rem;
-      padding: 15px 0;
+      padding: 20px;
+      text-align: center;
+      background: rgba(127, 127, 127, 0.03);
+      border-radius: 12px;
+    }
+
+    .empty-state-icon {
+      font-size: 2rem;
+      margin-bottom: 8px;
+      opacity: 0.5;
     }
 
     .clear-button {
@@ -456,6 +576,29 @@
       }
     }
 
+    .generating {
+      animation: pulse 1s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        opacity: 1;
+      }
+      50% {
+        opacity: 0.6;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
     @media (max-width: 850px) {
       .workspace,
       .bottom-grid {
@@ -468,6 +611,10 @@
 
       .lyrics-card {
         padding: 24px;
+      }
+
+      .presets {
+        grid-template-columns: repeat(2, 1fr);
       }
     }
 
@@ -490,6 +637,10 @@
 
       .action-button {
         width: 100%;
+      }
+
+      .presets {
+        grid-template-columns: 1fr;
       }
     }
   </style>
@@ -521,7 +672,10 @@
     <div class="workspace">
 
       <aside class="panel controls">
-        <h2>Generator Settings</h2>
+        <h2>
+          Generator Settings
+          <button id="randomizeButton" title="Randomize all settings">🎲</button>
+        </h2>
 
         <div class="field">
           <label for="genre">Genre</label>
@@ -546,6 +700,35 @@
             <option value="confident">Confident</option>
             <option value="melancholic">Melancholic</option>
           </select>
+        </div>
+
+        <div class="field">
+          <label for="theme">Theme (optional)</label>
+
+          <input
+            type="text"
+            id="theme"
+            placeholder="e.g., ambition, love, night..."
+          />
+        </div>
+
+        <div class="field">
+          <label for="structure">Structure</label>
+
+          <select id="structure">
+            <option value="verse-chorus-verse">Verse → Chorus → Verse</option>
+            <option value="verse-chorus-verse-chorus">Verse → Chorus → Verse → Chorus</option>
+            <option value="verse-prechorus-chorus-verse-bridge-chorus">Verse → Pre-Chorus → Chorus → Verse → Bridge → Chorus</option>
+          </select>
+        </div>
+
+        <div class="presets">
+          <button class="preset-button" data-preset="hype">🔥 Hype</button>
+          <button class="preset-button" data-preset="midnight">🌙 Midnight</button>
+          <button class="preset-button" data-preset="romance">❤️ Romance</button>
+          <button class="preset-button" data-preset="ambition">🚀 Ambition</button>
+          <button class="preset-button" data-preset="chill">🌊 Chill</button>
+          <button class="preset-button" data-preset="melancholy">💔 Melancholy</button>
         </div>
 
         <button class="generate-button" id="generateButton">
@@ -619,7 +802,7 @@
 
           <div class="actions">
             <button class="action-button primary" id="copyButton">
-              📋 Copy Lyrics
+              📋 Copy
             </button>
 
             <button class="action-button" id="regenerateButton">
@@ -629,11 +812,20 @@
             <button class="action-button" id="newTitleButton">
               🎵 New Title
             </button>
+
+            <button class="action-button" id="exportTxtButton">
+              💾 .txt
+            </button>
+
+            <button class="action-button" id="exportJsonButton">
+              📄 .json
+            </button>
           </div>
 
           <div class="stats">
             <span>📝 <strong id="wordCount">0</strong> words</span>
             <span>📏 <strong id="lineCount">0</strong> lines</span>
+            <span>🔤 <strong id="charCount">0</strong> chars</span>
             <span>💾 <strong id="favoriteCount">0</strong> saved</span>
           </div>
         </section>
@@ -645,6 +837,13 @@
 
       <section class="panel history">
         <h2>Recent Generations</h2>
+
+        <input
+          type="text"
+          class="search-box"
+          id="historySearch"
+          placeholder="Search history..."
+        />
 
         <div
           class="history-list"
@@ -661,6 +860,13 @@
 
       <section class="panel favorites">
         <h2>Saved Lyrics</h2>
+
+        <input
+          type="text"
+          class="search-box"
+          id="favoritesSearch"
+          placeholder="Search favorites..."
+        />
 
         <div
           class="favorites-list"
@@ -681,6 +887,7 @@
   <div class="toast" id="toast"></div>
 
   <script>
+    // ========== LYRIC DATA ==========
     const lyricData = {
       energetic: {
         color: "rgba(239, 68, 68, 0.18)",
@@ -688,9 +895,13 @@
           "Run the Night",
           "No Looking Back",
           "Lights On",
-          "Built for This"
+          "Built for This",
+          "Electric Pulse",
+          "Never Stop Moving",
+          "Full Speed",
+          "Heartbeat Rising"
         ],
-        lines: [
+        verseLines: [
           "Nothing can slow me down",
           "I feel the fire getting louder",
           "Every step is shaking the ground",
@@ -698,7 +909,21 @@
           "We keep moving through the noise",
           "Every heartbeat sounds like a choice",
           "The whole city knows my name",
-          "I'm not here to play the same game"
+          "I'm not here to play the same game",
+          "Racing faster than the lights",
+          "Chasing dreams into the night",
+          "Every second counts today",
+          "I won't let it slip away"
+        ],
+        chorusLines: [
+          "We keep moving, don't stop",
+          "Taking every dream to the top",
+          "We turn the pressure into gold",
+          "And make a story worth being told",
+          "Run the night, feel alive",
+          "Every moment we survive",
+          "Turn it up, let it show",
+          "This is how the legends grow"
         ]
       },
 
@@ -708,9 +933,13 @@
           "Keep Moving",
           "Built Different",
           "One More Step",
-          "Never Fold"
+          "Never Fold",
+          "Unbreakable",
+          "Rising Higher",
+          "Through the Storm",
+          "Stronger Now"
         ],
-        lines: [
+        verseLines: [
           "I keep walking when the road gets cold",
           "I carry every lesson that I hold",
           "No mountain is too high tonight",
@@ -718,7 +947,21 @@
           "One more step and one more chance",
           "I keep going when they say I can't",
           "The dream is heavy but I know the way",
-          "I build tomorrow from today"
+          "I build tomorrow from today",
+          "Standing tall through every test",
+          "Giving nothing but my best",
+          "Every scar has made me wise",
+          "I see fire in my own eyes"
+        ],
+        chorusLines: [
+          "I won't back down, won't give in",
+          "This is where my strength begins",
+          "Through the fire, through the pain",
+          "I'll rise up and rise again",
+          "Keep moving, never fold",
+          "This story is getting told",
+          "I'm unbreakable, I'm strong",
+          "This is where I belong"
         ]
       },
 
@@ -728,9 +971,13 @@
           "Slow Lights",
           "Easy Motion",
           "Late Night Drive",
-          "After Midnight"
+          "After Midnight",
+          "Calm Waters",
+          "Floating Away",
+          "Peaceful Mind",
+          "Gentle Breeze"
         ],
-        lines: [
+        verseLines: [
           "City lights are moving slowly",
           "I let the evening find me",
           "No need to rush the moment",
@@ -738,7 +985,21 @@
           "Take a breath and stay here",
           "Let the noise disappear",
           "We don't need to know tomorrow",
-          "Tonight is all we need"
+          "Tonight is all we need",
+          "Windows down, feel the air",
+          "Nowhere special, don't care",
+          "Time moves slow when you're this calm",
+          "Finding peace in my own song"
+        ],
+        chorusLines: [
+          "Let it flow, let it be",
+          "This is where I'm meant to be",
+          "Slow motion, easy pace",
+          "Finding joy in empty space",
+          "Floating through the night",
+          "Everything feels light",
+          "No rush, no race",
+          "Just a peaceful place"
         ]
       },
 
@@ -748,9 +1009,13 @@
           "Only Tonight",
           "Close to Me",
           "Under These Lights",
-          "Where We Belong"
+          "Where We Belong",
+          "Heart to Heart",
+          "Forever Starts Now",
+          "Two of Us",
+          "In Your Eyes"
         ],
-        lines: [
+        verseLines: [
           "You make the quiet feel alive",
           "I see forever when you smile",
           "Every second feels brand new",
@@ -758,7 +1023,21 @@
           "Stay a little longer tonight",
           "Let the world fade out of sight",
           "I don't need a perfect sky",
-          "Just your hand in mine"
+          "Just your hand in mine",
+          "Every word you say feels true",
+          "I found home in being with you",
+          "Time stops when you're near",
+          "All my doubts just disappear"
+        ],
+        chorusLines: [
+          "Only you, only now",
+          "I don't need to wonder how",
+          "This feels like where I belong",
+          "With you, everything feels right",
+          "Close to me, close to you",
+          "This is what love's meant to do",
+          "Heart to heart, soul to soul",
+          "Together we are whole"
         ]
       },
 
@@ -768,9 +1047,13 @@
           "Own the Room",
           "My Time",
           "Made to Lead",
-          "Watch Me"
+          "Watch Me",
+          "On Top",
+          "Unstoppable",
+          "Born to Win",
+          "Game Changer"
         ],
-        lines: [
+        verseLines: [
           "I walked in knowing who I am",
           "No permission, no second plan",
           "I earned every scar and every crown",
@@ -778,7 +1061,21 @@
           "I know exactly where I'm going",
           "Every move keeps the whole room watching",
           "No fear sitting on my shoulder",
-          "Every second makes me bolder"
+          "Every second makes me bolder",
+          "They said I couldn't, now they see",
+          "Everything they said I'd never be",
+          "I'm the author of my fate",
+          "Writing destiny, no debate"
+        ],
+        chorusLines: [
+          "Watch me rise, watch me shine",
+          "This moment is finally mine",
+          "Own the room, take the stage",
+          "I'm turning every single page",
+          "I'm unstoppable, I'm strong",
+          "This is where I belong",
+          "Made to lead, made to win",
+          "This is how my story begins"
         ]
       },
 
@@ -788,9 +1085,13 @@
           "After the Rain",
           "Empty Rooms",
           "Still Here",
-          "Yesterday"
+          "Yesterday",
+          "Fading Light",
+          "Echoes",
+          "Lost and Found",
+          "Quiet Goodbye"
         ],
-        lines: [
+        verseLines: [
           "The room is quiet after midnight",
           "Your memory still knows where to hide",
           "I hear your name inside the silence",
@@ -798,9 +1099,76 @@
           "I keep looking through old photographs",
           "Trying to find the version of us that lasted",
           "Maybe time will teach me how",
-          "To let go of what I can't hold now"
+          "To let go of what I can't hold now",
+          "Empty spaces where you used to be",
+          "Every corner brings you back to me",
+          "I'm still here but something's changed",
+          "Nothing feels the same"
+        ],
+        chorusLines: [
+          "After the rain, I'm still standing",
+          "Learning how to keep on landing",
+          "Echoes of what we used to be",
+          "Haunting every part of me",
+          "Fading light, quiet goodbye",
+          "Learning how to let you fly",
+          "Still here, still true",
+          "Moving on without you"
         ]
       }
+    };
+
+    const themeLines = {
+      ambition: [
+        "Chasing dreams that feel so far",
+        "Building castles from the ground",
+        "Every setback makes me stronger",
+        "I won't stop until I get there",
+        "The road is long but I keep climbing",
+        "Success is just around the corner",
+        "I'm writing my own legacy",
+        "Nothing can hold me back now"
+      ],
+      love: [
+        "You're the reason I believe",
+        "Every heartbeat tells your name",
+        "Love found me when I least expected",
+        "Two hearts beating as one",
+        "You're my home, you're my safe place",
+        "In your arms I find my peace",
+        "Love is all we really need",
+        "You make everything better"
+      ],
+      night: [
+        "Under stars we find our way",
+        "The night holds all the answers",
+        "Midnight conversations, endless dreams",
+        "City lights paint the sky",
+        "Darkness brings the truth to light",
+        "Night time is our time",
+        "When the world sleeps, we wake up",
+        "The night is young and so are we"
+      ],
+      friendship: [
+        "Side by side through thick and thin",
+        "Friends who become family",
+        "You've got my back, I've got yours",
+        "Together we can face it all",
+        "Loyalty that never breaks",
+        "Real friends stay when others leave",
+        "We're in this together",
+        "Friendship is the greatest gift"
+      ],
+      freedom: [
+        "Breaking chains that held me down",
+        "Free to be who I am",
+        "No more walls, no more fences",
+        "Freedom tastes like victory",
+        "I'm finally breathing easy",
+        "Unbound, unleashed, unafraid",
+        "The world is wide and I am free",
+        "Living life on my own terms"
+      ]
     };
 
     const genreNames = {
@@ -819,38 +1187,61 @@
       rock: "bold and powerful"
     };
 
+    const structureTypes = {
+      "verse-chorus-verse": ["verse", "chorus", "verse"],
+      "verse-chorus-verse-chorus": ["verse", "chorus", "verse", "chorus"],
+      "verse-prechorus-chorus-verse-bridge-chorus": ["verse", "prechorus", "chorus", "verse", "bridge", "chorus"]
+    };
+
+    const presets = {
+      hype: { genre: "pop", mood: "energetic", theme: "ambition" },
+      midnight: { genre: "rnb", mood: "chill", theme: "night" },
+      romance: { genre: "rnb", mood: "romantic", theme: "love" },
+      ambition: { genre: "rock", mood: "determined", theme: "ambition" },
+      chill: { genre: "pop", mood: "chill", theme: "" },
+      melancholy: { genre: "rnb", mood: "melancholic", theme: "" }
+    };
+
+    // ========== STATE ==========
+    let currentSong = null;
+    let favorites = [];
+    let history = [];
+    let historySearch = "";
+    let favoritesSearch = "";
+
+    // ========== DOM ELEMENTS ==========
     const elements = {
       genre: document.getElementById("genre"),
       mood: document.getElementById("mood"),
+      theme: document.getElementById("theme"),
+      structure: document.getElementById("structure"),
       generateButton: document.getElementById("generateButton"),
       regenerateButton: document.getElementById("regenerateButton"),
       newTitleButton: document.getElementById("newTitleButton"),
       copyButton: document.getElementById("copyButton"),
+      exportTxtButton: document.getElementById("exportTxtButton"),
+      exportJsonButton: document.getElementById("exportJsonButton"),
       favoriteButton: document.getElementById("favoriteButton"),
       themeButton: document.getElementById("themeButton"),
+      randomizeButton: document.getElementById("randomizeButton"),
       lyricsCard: document.getElementById("lyricsCard"),
       songTitle: document.getElementById("songTitle"),
       songMeta: document.getElementById("songMeta"),
       lyricsContainer: document.getElementById("lyricsContainer"),
       wordCount: document.getElementById("wordCount"),
       lineCount: document.getElementById("lineCount"),
+      charCount: document.getElementById("charCount"),
       favoriteCount: document.getElementById("favoriteCount"),
       historyList: document.getElementById("historyList"),
       favoritesList: document.getElementById("favoritesList"),
+      historySearch: document.getElementById("historySearch"),
+      favoritesSearch: document.getElementById("favoritesSearch"),
       clearHistoryButton: document.getElementById("clearHistoryButton"),
       clearFavoritesButton: document.getElementById("clearFavoritesButton"),
       toast: document.getElementById("toast")
     };
 
-    let currentSong = null;
-    let favorites = JSON.parse(
-      localStorage.getItem("lyriclab-favorites") || "[]"
-    );
-
-    let history = JSON.parse(
-      localStorage.getItem("lyriclab-history") || "[]"
-    );
-
+    // ========== UTILITIES ==========
     function randomItem(array) {
       return array[Math.floor(Math.random() * array.length)];
     }
@@ -859,35 +1250,134 @@
       return [...array].sort(() => Math.random() - 0.5);
     }
 
-    function generateLyrics() {
+    function escapeHTML(value) {
+      return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    function generateId() {
+      return Date.now() + Math.random().toString(36).substr(2, 9);
+    }
+
+    // ========== STORAGE ==========
+    function safeJSONParse(data, fallback) {
+      try {
+        return JSON.parse(data);
+      } catch (e) {
+        return fallback;
+      }
+    }
+
+    function loadState() {
+      favorites = safeJSONParse(
+        localStorage.getItem("lyriclab-favorites"),
+        []
+      );
+      history = safeJSONParse(
+        localStorage.getItem("lyriclab-history"),
+        []
+      );
+
+      // Validate data structure
+      if (!Array.isArray(favorites)) favorites = [];
+      if (!Array.isArray(history)) history = [];
+
+      // Filter out invalid entries
+      favorites = favorites.filter(
+        song => song && typeof song === "object" && song.id
+      );
+      history = history.filter(
+        song => song && typeof song === "object" && song.id
+      );
+    }
+
+    function saveFavorites() {
+      localStorage.setItem(
+        "lyriclab-favorites",
+        JSON.stringify(favorites)
+      );
+    }
+
+    function saveHistory() {
+      localStorage.setItem(
+        "lyriclab-history",
+        JSON.stringify(history)
+      );
+    }
+
+    // ========== SONG GENERATION ==========
+    function generateLyricsForSection(mood, sectionType, theme, usedLines) {
+      const data = lyricData[mood];
+      const lineCount = sectionType === "chorus" ? 4 : 4;
+      
+      let availableLines = [...data.verseLines];
+      
+      // Add theme-specific lines if available
+      if (theme && themeLines[theme.toLowerCase()]) {
+        availableLines = [...availableLines, ...themeLines[theme.toLowerCase()]];
+      }
+      
+      // Filter out already used lines
+      availableLines = availableLines.filter(line => !usedLines.includes(line));
+      
+      // If we don't have enough unique lines, allow some repetition
+      if (availableLines.length < lineCount) {
+        availableLines = [...data.verseLines, ...(themeLines[theme?.toLowerCase()] || [])];
+      }
+      
+      const selectedLines = shuffle(availableLines).slice(0, lineCount);
+      
+      // Mark as used
+      usedLines.push(...selectedLines);
+      
+      return selectedLines;
+    }
+
+    function generateSong() {
       const mood = elements.mood.value;
       const genre = elements.genre.value;
+      const theme = elements.theme.value.trim();
+      const structure = elements.structure.value;
+      
       const data = lyricData[mood];
-
-      const selectedLines = shuffle(data.lines);
+      const sections = structureTypes[structure];
+      const usedLines = [];
+      
+      const songSections = sections.map(sectionType => {
+        const lines = generateLyricsForSection(mood, sectionType, theme, usedLines);
+        return {
+          type: sectionType,
+          lines: lines
+        };
+      });
 
       currentSong = {
-        id: Date.now(),
+        id: generateId(),
         title: randomItem(data.titles),
         mood,
         genre,
+        theme,
+        structure,
         style: genreStyles[genre],
-        verse1: selectedLines.slice(0, 4),
-        chorus: selectedLines.slice(4, 8),
-        verse2: shuffle(selectedLines).slice(0, 4)
+        sections: songSections,
+        createdAt: new Date().toISOString()
       };
 
       renderSong();
       saveToHistory();
       updateFavoriteState();
+      showToast("New song generated!");
     }
 
     function generateTitle() {
       if (!currentSong) return;
 
-      currentSong.title = randomItem(
-        lyricData[currentSong.mood].titles
-      );
+      const data = lyricData[currentSong.mood];
+      currentSong.title = randomItem(data.titles);
 
       elements.songTitle.textContent = currentSong.title;
 
@@ -895,43 +1385,66 @@
       showToast("New title generated");
     }
 
+    // ========== RENDERING ==========
     function renderSong() {
+      if (!currentSong) return;
+
       const moodData = lyricData[currentSong.mood];
 
       elements.songTitle.textContent = currentSong.title;
 
-      elements.songMeta.textContent =
-        `${genreNames[currentSong.genre]} • ` +
-        `${currentSong.mood} • ` +
-        `${currentSong.style}`;
+      const metaParts = [
+        genreNames[currentSong.genre],
+        currentSong.mood.charAt(0).toUpperCase() + currentSong.mood.slice(1)
+      ];
+      
+      if (currentSong.theme) {
+        metaParts.push(currentSong.theme);
+      }
+      
+      metaParts.push(currentSong.style);
+
+      elements.songMeta.textContent = metaParts.join(" • ");
 
       elements.lyricsCard.style.setProperty(
         "--mood-color",
         moodData.color
       );
 
-      elements.lyricsContainer.innerHTML = `
-        <div class="fade-in">
-          <div class="section-label">Verse 1</div>
-          <p class="lyric-text">
-            ${currentSong.verse1.join("<br>")}
-          </p>
-        </div>
+      const sectionLabels = {
+        verse: "Verse",
+        chorus: "Chorus",
+        prechorus: "Pre-Chorus",
+        bridge: "Bridge"
+      };
 
-        <div class="fade-in">
-          <div class="section-label">Chorus</div>
-          <p class="lyric-text">
-            ${currentSong.chorus.join("<br>")}
-          </p>
-        </div>
+      let verseCount = 0;
+      let chorusCount = 0;
 
-        <div class="fade-in">
-          <div class="section-label">Verse 2</div>
-          <p class="lyric-text">
-            ${currentSong.verse2.join("<br>")}
-          </p>
-        </div>
-      `;
+      const sectionsHTML = currentSong.sections.map(section => {
+        let label = sectionLabels[section.type] || section.type;
+        
+        if (section.type === "verse") {
+          verseCount++;
+          label = `${label} ${verseCount}`;
+        } else if (section.type === "chorus") {
+          chorusCount++;
+          if (chorusCount > 1) {
+            label = `${label} ${chorusCount}`;
+          }
+        }
+
+        return `
+          <div class="fade-in">
+            <div class="section-label">${label}</div>
+            <p class="lyric-text">
+              ${section.lines.map(line => escapeHTML(line)).join("<br>")}
+            </p>
+          </div>
+        `;
+      }).join("");
+
+      elements.lyricsContainer.innerHTML = sectionsHTML;
 
       updateStats();
     }
@@ -939,16 +1452,45 @@
     function getFullLyrics() {
       if (!currentSong) return "";
 
-      return `${currentSong.title}
+      const sectionLabels = {
+        verse: "Verse",
+        chorus: "Chorus",
+        prechorus: "Pre-Chorus",
+        bridge: "Bridge"
+      };
 
-[Verse 1]
-${currentSong.verse1.join("\n")}
+      let verseCount = 0;
+      let chorusCount = 0;
 
-[Chorus]
-${currentSong.chorus.join("\n")}
+      let lyrics = `${currentSong.title}\n\n`;
+      lyrics += `Genre: ${genreNames[currentSong.genre]}\n`;
+      lyrics += `Mood: ${currentSong.mood.charAt(0).toUpperCase() + currentSong.mood.slice(1)}\n`;
+      
+      if (currentSong.theme) {
+        lyrics += `Theme: ${currentSong.theme}\n`;
+      }
+      
+      lyrics += "\n";
 
-[Verse 2]
-${currentSong.verse2.join("\n")}`;
+      currentSong.sections.forEach(section => {
+        let label = sectionLabels[section.type] || section.type;
+        
+        if (section.type === "verse") {
+          verseCount++;
+          label = `${label} ${verseCount}`;
+        } else if (section.type === "chorus") {
+          chorusCount++;
+          if (chorusCount > 1) {
+            label = `${label} ${chorusCount}`;
+          }
+        }
+
+        lyrics += `[${label}]\n`;
+        lyrics += section.lines.join("\n");
+        lyrics += "\n\n";
+      });
+
+      return lyrics.trim();
     }
 
     function updateStats() {
@@ -967,25 +1509,15 @@ ${currentSong.verse2.join("\n")}`;
             !line.startsWith("[")
         );
 
+      const chars = lyrics.replace(/\s/g, "").length;
+
       elements.wordCount.textContent = words.length;
       elements.lineCount.textContent = lines.length;
+      elements.charCount.textContent = chars;
       elements.favoriteCount.textContent = favorites.length;
     }
 
-    async function copyLyrics() {
-      if (!currentSong) return;
-
-      try {
-        await navigator.clipboard.writeText(
-          getFullLyrics()
-        );
-
-        showToast("Lyrics copied to clipboard");
-      } catch (error) {
-        showToast("Clipboard access failed");
-      }
-    }
-
+    // ========== FAVORITES ==========
     function toggleFavorite() {
       if (!currentSong) return;
 
@@ -997,15 +1529,11 @@ ${currentSong.verse2.join("\n")}`;
         favorites.splice(existingIndex, 1);
         showToast("Removed from favorites");
       } else {
-        favorites.unshift(currentSong);
+        favorites.unshift({ ...currentSong });
         showToast("Saved to favorites");
       }
 
-      localStorage.setItem(
-        "lyriclab-favorites",
-        JSON.stringify(favorites)
-      );
-
+      saveFavorites();
       updateFavoriteState();
       renderFavorites();
       updateStats();
@@ -1027,6 +1555,23 @@ ${currentSong.verse2.join("\n")}`;
         isFavorite ? "★" : "☆";
     }
 
+    function deleteFavorite(id) {
+      favorites = favorites.filter(song => song.id !== id);
+      saveFavorites();
+      updateFavoriteState();
+      renderFavorites();
+      updateStats();
+      showToast("Deleted from favorites");
+    }
+
+    function restoreFromFavorite(song) {
+      currentSong = { ...song };
+      renderSong();
+      updateFavoriteState();
+      showToast("Song restored from favorites");
+    }
+
+    // ========== HISTORY ==========
     function saveToHistory() {
       if (!currentSong) return;
 
@@ -1034,86 +1579,210 @@ ${currentSong.verse2.join("\n")}`;
         song => song.id !== currentSong.id
       );
 
-      history.unshift({
-        id: currentSong.id,
-        title: currentSong.title,
-        mood: currentSong.mood,
-        genre: currentSong.genre
-      });
+      history.unshift({ ...currentSong });
 
-      history = history.slice(0, 10);
+      // Limit history to 20 items
+      history = history.slice(0, 20);
 
-      localStorage.setItem(
-        "lyriclab-history",
-        JSON.stringify(history)
-      );
-
+      saveHistory();
       renderHistory();
     }
 
-    function renderHistory() {
-      if (history.length === 0) {
-        elements.historyList.innerHTML = `
-          <p class="empty-state">
-            Your generated songs will appear here.
-          </p>
-        `;
-        return;
-      }
-
-      elements.historyList.innerHTML = history
-        .map(
-          song => `
-            <button
-              class="history-item"
-              data-id="${song.id}"
-              style="text-align: left; color: inherit;"
-            >
-              <strong>${escapeHTML(song.title)}</strong>
-              <p>
-                ${escapeHTML(
-                  genreNames[song.genre]
-                )}
-                •
-                ${escapeHTML(song.mood)}
-              </p>
-            </button>
-          `
-        )
-        .join("");
+    function deleteHistoryItem(id) {
+      history = history.filter(song => song.id !== id);
+      saveHistory();
+      renderHistory();
+      showToast("Deleted from history");
     }
 
-    function renderFavorites() {
-      if (favorites.length === 0) {
-        elements.favoritesList.innerHTML = `
-          <p class="empty-state">
-            Favorite songs will appear here.
-          </p>
+    function restoreFromHistory(song) {
+      currentSong = { ...song };
+      renderSong();
+      updateFavoriteState();
+      showToast("Song restored from history");
+    }
+
+    // ========== SEARCH ==========
+    function filterBySearch(items, searchTerm) {
+      if (!searchTerm) return items;
+      
+      const term = searchTerm.toLowerCase();
+      
+      return items.filter(item => {
+        const searchText = [
+          item.title,
+          item.mood,
+          item.genre,
+          item.theme,
+          ...(item.sections?.flatMap(s => s.lines) || [])
+        ].join(" ").toLowerCase();
+        
+        return searchText.includes(term);
+      });
+    }
+
+    // ========== RENDERING LISTS ==========
+    function renderHistory() {
+      const filteredHistory = filterBySearch(history, historySearch);
+
+      if (filteredHistory.length === 0) {
+        elements.historyList.innerHTML = `
+          <div class="empty-state">
+            <div class="empty-state-icon">📝</div>
+            <p>${historySearch ? "No matching songs found" : "Your generated songs will appear here"}</p>
+          </div>
         `;
         return;
       }
 
-      elements.favoritesList.innerHTML = favorites
+      elements.historyList.innerHTML = filteredHistory
         .map(
           song => `
-            <div class="favorite-item">
+            <div class="history-item" data-id="${song.id}">
               <strong>${escapeHTML(song.title)}</strong>
               <p>
-                ${escapeHTML(
-                  genreNames[song.genre]
-                )}
-                •
-                ${escapeHTML(song.mood)}
+                ${escapeHTML(genreNames[song.genre])} • 
+                ${escapeHTML(song.mood.charAt(0).toUpperCase() + song.mood.slice(1))}
+                ${song.theme ? " • " + escapeHTML(song.theme) : ""}
               </p>
+              <div class="item-actions">
+                <button class="item-button restore" data-action="restore" data-id="${song.id}">
+                  Restore
+                </button>
+                <button class="item-button delete" data-action="delete" data-id="${song.id}">
+                  Delete
+                </button>
+              </div>
             </div>
           `
         )
         .join("");
     }
 
+    function renderFavorites() {
+      const filteredFavorites = filterBySearch(favorites, favoritesSearch);
+
+      if (filteredFavorites.length === 0) {
+        elements.favoritesList.innerHTML = `
+          <div class="empty-state">
+            <div class="empty-state-icon">⭐</div>
+            <p>${favoritesSearch ? "No matching favorites found" : "Favorite songs will appear here"}</p>
+          </div>
+        `;
+        return;
+      }
+
+      elements.favoritesList.innerHTML = filteredFavorites
+        .map(
+          song => `
+            <div class="favorite-item" data-id="${song.id}">
+              <strong>${escapeHTML(song.title)}</strong>
+              <p>
+                ${escapeHTML(genreNames[song.genre])} • 
+                ${escapeHTML(song.mood.charAt(0).toUpperCase() + song.mood.slice(1))}
+                ${song.theme ? " • " + escapeHTML(song.theme) : ""}
+              </p>
+              <div class="item-actions">
+                <button class="item-button restore" data-action="restore" data-id="${song.id}">
+                  Restore
+                </button>
+                <button class="item-button delete" data-action="delete" data-id="${song.id}">
+                  Delete
+                </button>
+              </div>
+            </div>
+          `
+        )
+        .join("");
+    }
+
+    // ========== EXPORT ==========
+    function exportAsTxt() {
+      if (!currentSong) return;
+
+      const lyrics = getFullLyrics();
+      const blob = new Blob([lyrics], { type: "text/plain" });
+      const url = URL.createObjectURL(blob);
+      
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `${currentSong.title.replace(/[^a-z0-9]/gi, "_")}.txt`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      
+      showToast("Downloaded as .txt");
+    }
+
+    function exportAsJson() {
+      if (!currentSong) return;
+
+      const songData = {
+        title: currentSong.title,
+        genre: genreNames[currentSong.genre],
+        mood: currentSong.mood,
+        theme: currentSong.theme,
+        structure: currentSong.structure,
+        sections: currentSong.sections,
+        createdAt: currentSong.createdAt
+      };
+
+      const blob = new Blob(
+        [JSON.stringify(songData, null, 2)],
+        { type: "application/json" }
+      );
+      const url = URL.createObjectURL(blob);
+      
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `${currentSong.title.replace(/[^a-z0-9]/gi, "_")}.json`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      
+      showToast("Downloaded as .json");
+    }
+
+    // ========== CLIPBOARD ==========
+    async function copyLyrics() {
+      if (!currentSong) return;
+
+      try {
+        await navigator.clipboard.writeText(getFullLyrics());
+        showToast("Lyrics copied to clipboard");
+      } catch (error) {
+        showToast("Clipboard access failed");
+      }
+    }
+
+    // ========== THEME ==========
+    function toggleTheme() {
+      document.body.classList.toggle("dark");
+
+      const isDark = document.body.classList.contains("dark");
+
+      localStorage.setItem(
+        "lyriclab-theme",
+        isDark ? "dark" : "light"
+      );
+
+      elements.themeButton.textContent = isDark ? "☀" : "☾";
+    }
+
+    function loadTheme() {
+      const theme = localStorage.getItem("lyriclab-theme");
+
+      if (theme === "dark") {
+        document.body.classList.add("dark");
+        elements.themeButton.textContent = "☀";
+      }
+    }
+
+    // ========== TOAST ==========
     function showToast(message) {
       elements.toast.textContent = message;
-
       elements.toast.classList.add("show");
 
       clearTimeout(showToast.timeout);
@@ -1123,159 +1792,197 @@ ${currentSong.verse2.join("\n")}`;
       }, 2200);
     }
 
-    function escapeHTML(value) {
-      return String(value)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
+    // ========== PRESETS ==========
+    function applyPreset(presetName) {
+      const preset = presets[presetName];
+      if (!preset) return;
+
+      elements.genre.value = preset.genre;
+      elements.mood.value = preset.mood;
+      elements.theme.value = preset.theme;
+      
+      showToast(`${presetName.charAt(0).toUpperCase() + presetName.slice(1)} preset applied`);
     }
 
-    function toggleTheme() {
-      document.body.classList.toggle("dark");
+    // ========== RANDOMIZE ==========
+    function randomizeSettings() {
+      const genres = Object.keys(genreNames);
+      const moods = Object.keys(lyricData);
+      const themes = Object.keys(themeLines);
+      const structures = Object.keys(structureTypes);
 
-      const isDark =
-        document.body.classList.contains("dark");
+      elements.genre.value = randomItem(genres);
+      elements.mood.value = randomItem(moods);
+      elements.theme.value = randomItem(themes);
+      elements.structure.value = randomItem(structures);
 
-      localStorage.setItem(
-        "lyriclab-theme",
-        isDark ? "dark" : "light"
-      );
-
-      elements.themeButton.textContent =
-        isDark ? "☀" : "☾";
+      showToast("Settings randomized");
     }
 
-    function loadTheme() {
-      const theme =
-        localStorage.getItem("lyriclab-theme");
+    // ========== EVENT LISTENERS ==========
+    elements.generateButton.addEventListener("click", () => {
+      elements.generateButton.disabled = true;
+      elements.generateButton.textContent = "✨ Generating...";
+      
+      setTimeout(() => {
+        generateSong();
+        elements.generateButton.disabled = false;
+        elements.generateButton.textContent = "✨ Generate Lyrics";
+      }, 300);
+    });
 
-      if (theme === "dark") {
-        document.body.classList.add("dark");
-        elements.themeButton.textContent = "☀";
+    elements.regenerateButton.addEventListener("click", () => {
+      elements.generateButton.disabled = true;
+      elements.generateButton.textContent = "✨ Generating...";
+      
+      setTimeout(() => {
+        generateSong();
+        elements.generateButton.disabled = false;
+        elements.generateButton.textContent = "✨ Generate Lyrics";
+      }, 300);
+    });
+
+    elements.newTitleButton.addEventListener("click", generateTitle);
+    elements.copyButton.addEventListener("click", copyLyrics);
+    elements.exportTxtButton.addEventListener("click", exportAsTxt);
+    elements.exportJsonButton.addEventListener("click", exportAsJson);
+    elements.favoriteButton.addEventListener("click", toggleFavorite);
+    elements.themeButton.addEventListener("click", toggleTheme);
+    elements.randomizeButton.addEventListener("click", randomizeSettings);
+
+    elements.historySearch.addEventListener("input", (e) => {
+      historySearch = e.target.value;
+      renderHistory();
+    });
+
+    elements.favoritesSearch.addEventListener("input", (e) => {
+      favoritesSearch = e.target.value;
+      renderFavorites();
+    });
+
+    elements.clearHistoryButton.addEventListener("click", () => {
+      if (history.length === 0) {
+        showToast("History is already empty");
+        return;
       }
-    }
-
-    elements.generateButton.addEventListener(
-      "click",
-      generateLyrics
-    );
-
-    elements.regenerateButton.addEventListener(
-      "click",
-      generateLyrics
-    );
-
-    elements.newTitleButton.addEventListener(
-      "click",
-      generateTitle
-    );
-
-    elements.copyButton.addEventListener(
-      "click",
-      copyLyrics
-    );
-
-    elements.favoriteButton.addEventListener(
-      "click",
-      toggleFavorite
-    );
-
-    elements.themeButton.addEventListener(
-      "click",
-      toggleTheme
-    );
-
-    elements.clearHistoryButton.addEventListener(
-      "click",
-      () => {
+      
+      if (confirm("Clear all history? This cannot be undone.")) {
         history = [];
-
-        localStorage.removeItem(
-          "lyriclab-history"
-        );
-
+        localStorage.removeItem("lyriclab-history");
         renderHistory();
-
         showToast("History cleared");
       }
-    );
+    });
 
-    elements.clearFavoritesButton.addEventListener(
-      "click",
-      () => {
+    elements.clearFavoritesButton.addEventListener("click", () => {
+      if (favorites.length === 0) {
+        showToast("Favorites is already empty");
+        return;
+      }
+      
+      if (confirm("Clear all favorites? This cannot be undone.")) {
         favorites = [];
-
-        localStorage.removeItem(
-          "lyriclab-favorites"
-        );
-
+        localStorage.removeItem("lyriclab-favorites");
         updateFavoriteState();
         renderFavorites();
         updateStats();
-
         showToast("Favorites cleared");
       }
-    );
+    });
 
-    elements.historyList.addEventListener(
-      "click",
-      event => {
-        const button =
-          event.target.closest("[data-id]");
+    // Event delegation for history items
+    elements.historyList.addEventListener("click", event => {
+      const button = event.target.closest("[data-action]");
+      if (!button) return;
 
-        if (!button) return;
+      const action = button.dataset.action;
+      const id = button.dataset.id;
+      const song = history.find(s => String(s.id) === id);
 
-        const selected = history.find(
-          song =>
-            String(song.id) ===
-            button.dataset.id
-        );
+      if (!song) return;
 
-        if (!selected) return;
-
-        elements.genre.value = selected.genre;
-        elements.mood.value = selected.mood;
-
-        generateLyrics();
+      if (action === "restore") {
+        restoreFromHistory(song);
+      } else if (action === "delete") {
+        deleteHistoryItem(id);
       }
-    );
+    });
 
-    document.addEventListener(
-      "keydown",
-      event => {
-        const activeElement =
-          document.activeElement;
+    // Event delegation for favorites items
+    elements.favoritesList.addEventListener("click", event => {
+      const button = event.target.closest("[data-action]");
+      if (!button) return;
 
-        const typing =
-          activeElement.tagName === "INPUT" ||
-          activeElement.tagName === "TEXTAREA" ||
-          activeElement.tagName === "SELECT";
+      const action = button.dataset.action;
+      const id = button.dataset.id;
+      const song = favorites.find(s => String(s.id) === id);
 
-        if (
-          event.code === "Space" &&
-          !typing
-        ) {
-          event.preventDefault();
-          generateLyrics();
+      if (!song) return;
+
+      if (action === "restore") {
+        restoreFromFavorite(song);
+      } else if (action === "delete") {
+        deleteFavorite(id);
+      }
+    });
+
+    // Preset buttons
+    document.querySelectorAll(".preset-button").forEach(button => {
+      button.addEventListener("click", () => {
+        const presetName = button.dataset.preset;
+        applyPreset(presetName);
+      });
+    });
+
+    // Keyboard shortcuts
+    document.addEventListener("keydown", event => {
+      const activeElement = document.activeElement;
+
+      const typing =
+        activeElement.tagName === "INPUT" ||
+        activeElement.tagName === "TEXTAREA" ||
+        activeElement.tagName === "SELECT";
+
+      // Space to generate
+      if (event.code === "Space" && !typing) {
+        event.preventDefault();
+        if (!elements.generateButton.disabled) {
+          generateSong();
         }
+      }
 
-        if (
-          (event.ctrlKey || event.metaKey) &&
-          event.key.toLowerCase() === "c"
-        ) {
-          if (!typing) {
-            copyLyrics();
+      // Ctrl/Cmd + C to copy
+      if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "c") {
+        if (!typing) {
+          event.preventDefault();
+          copyLyrics();
+        }
+      }
+
+      // Ctrl/Cmd + S to save
+      if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "s") {
+        if (!typing) {
+          event.preventDefault();
+          if (currentSong) {
+            toggleFavorite();
           }
         }
       }
-    );
 
+      // Escape to close dialogs (currently none, but good practice)
+      if (event.key === "Escape") {
+        if (elements.toast.classList.contains("show")) {
+          elements.toast.classList.remove("show");
+        }
+      }
+    });
+
+    // ========== INITIALIZATION ==========
     loadTheme();
+    loadState();
     renderHistory();
     renderFavorites();
-    generateLyrics();
+    generateSong();
   </script>
 </body>
 </html>
